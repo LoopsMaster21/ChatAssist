@@ -1,0 +1,30 @@
+kind = "api"
+previewPath = "/"
+title = "ChatAssist"
+version = "1.0.0"
+id = "ChatAssistSpinneysArtv1"
+
+[[services]]
+localPort = 5000
+name = "Chatbot"
+paths = ["/"]
+
+[services.env]
+PORT = "5000"
+
+[services.development]
+run = "streamlit run app.py --server.port 5000 --server.address 0.0.0.0 --server.headless true"
+
+[services.production]
+
+[services.production.build]
+args = ["bash", "-lc", "echo build complete"]
+
+[services.production.run]
+args = ["streamlit", "run", "artifacts/chatbot/app.py", "--server.port", "5000", "--server.address", "0.0.0.0", "--server.headless", "true", "--server.enableCORS", "false", "--server.enableXsrfProtection", "false"]
+
+[services.production.run.env]
+PORT = "5000"
+
+[services.production.health.startup]
+path = "/_stcore/health"
